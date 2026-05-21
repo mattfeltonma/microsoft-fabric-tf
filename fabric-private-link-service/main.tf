@@ -1,4 +1,6 @@
-resource "azapi_resource" "private_link_service_fabric" {
+## Create Fabric Private Link Service resource
+##
+resource "azapi_resource" "fabric_private_link_service" {
 
   type                      = "Microsoft.Fabric/privateLinkServicesForFabric@2024-06-01"
   name                      = var.fabric_pls_name
