@@ -23,7 +23,10 @@ resource "azapi_resource" "fabric_private_link_service" {
 ## Create the Fabric Workspace managed private endpoint
 ##
 resource "fabric_workspace_managed_private_endpoint" "fabric_workspace_mpe" {
-  name                            = "pe${var.fabric_workspace_id}"
+  depends_on = [
+    azapi_resource.fabric_private_link_service
+]
+  name                            = "peworkspace"
   workspace_id                    = var.fabric_workspace_id
   target_private_link_resource_id = azapi_resource.fabric_private_link_service.id
   target_subresource_type         = "workspace"
@@ -33,6 +36,11 @@ resource "fabric_workspace_managed_private_endpoint" "fabric_workspace_mpe" {
 ## Approve the managed private endpoint
 ##
 resource "azapi_update_resource" "approve_mpe" {
+  depends_on = [
+    fabric_workspace_managed_private_endpoint.fabric_workspace_mpe,
+    data.azapi_resource.fabric_private_link_service
+]
+
   type      = "Microsoft.Fabric/privateLinkServicesForFabric/privateEndpointConnections@2024-06-01"
   name      = local.private_endpoint_connection_name
   parent_id = azapi_resource.fabric_private_link_service.id
