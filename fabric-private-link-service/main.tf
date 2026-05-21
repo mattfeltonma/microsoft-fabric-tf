@@ -18,8 +18,8 @@ resource "azapi_resource" "fabric_private_link_service" {
 
 ## Create the Fabric Workspace managed private endpoint
 ##
-resource "fabric_managed_private_endpoint" "fabric_workspace_mpe" {
-  name                            = var.managed_pe_name
+resource "fabric_workspace_managed_private_endpoint" "fabric_workspace_mpe" {
+  name                            = "pe${var.fabric_workspace_id}"
   workspace_id                    = var.fabric_workspace_id
   target_private_link_resource_id = azapi_resource.fabric_private_link_service.id
   target_subresource_type         = "workspace"
@@ -35,7 +35,7 @@ resource "azapi_update_resource" "approve_mpe" {
 
   body = {
     properties = {
-        privateLinkServieConnectionState = {
+        privateLinkServiceConnectionState = {
             description = "Auto Approved by Terraform"
             status = "Approved"
         }
