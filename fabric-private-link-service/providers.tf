@@ -1,2 +1,5 @@
 provider "azapi" {
 }
+
+provider "fabric" {
+}
