@@ -4,7 +4,7 @@ variable "fabric_workspace_id" {
 }
 
 variable "fabric_pls_name" {
-  description = "This is the name of the Fabric Private Link Service resource that will be created"
+  description = "This is the name of the Fabric Private Link Service resource that will be created. It can only contain letters, numbers, and hyphens."
   type        = string
 }
 
