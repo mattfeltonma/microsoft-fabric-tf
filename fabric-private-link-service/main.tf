@@ -14,6 +14,10 @@ resource "azapi_resource" "fabric_private_link_service" {
       workspaceId = var.fabric_workspace_id
     }
   }
+
+  response_export_values = [
+    "properties.privateEndpointConnections"
+  ]
 }
 
 ## Create the Fabric Workspace managed private endpoint
@@ -29,16 +33,16 @@ resource "fabric_workspace_managed_private_endpoint" "fabric_workspace_mpe" {
 ## Approve the managed private endpoint
 ##
 resource "azapi_update_resource" "approve_mpe" {
-  type = "Microsoft.Fabric/privateLinkServicesForFabric/privateEndpointConnections@2024-06-01"
-  name = local.private_endpoint_connection_name
+  type      = "Microsoft.Fabric/privateLinkServicesForFabric/privateEndpointConnections@2024-06-01"
+  name      = local.private_endpoint_connection_name
   parent_id = azapi_resource.fabric_private_link_service.id
 
   body = {
     properties = {
-        privateLinkServiceConnectionState = {
-            description = "Auto Approved by Terraform"
-            status = "Approved"
-        }
+      privateLinkServiceConnectionState = {
+        description = "Auto Approved by Terraform"
+        status      = "Approved"
+      }
     }
   }
 }
