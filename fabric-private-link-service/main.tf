@@ -4,7 +4,7 @@ resource "azapi_resource" "private_link_service_fabric" {
   name                      = var.fabric_pls_name
   parent_id                 = var.resource_group_id
   location                  = "global"
-  schema_validation_enabled = true
+  schema_validation_enabled = false
 
   body = {
     properties = {
